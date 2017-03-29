@@ -80,6 +80,10 @@ export default class App extends Component {
     }
   ]
     };
+    //El estado esta muy grande, puede resultar confuso para alguien que quiera contribuír al código.
+    //Tal vez se pueda hacer metodos con nombres dicientes que retornen objetos del estado. Por ejemplo,
+    // en types depronto poner types: this.getTypes() y en getTypes retornar el arreglo . Eso haría que el código
+    //sea mucho más fácil de leer y mantener.
   };
 
 
@@ -117,6 +121,7 @@ export default class App extends Component {
     });
   };
 
+  //chevere que utilice react bootstrap en vez de bootstrap normal. Hace que sea más fácil de leer.
   render() {
     return (
       <div>
@@ -132,7 +137,8 @@ export default class App extends Component {
               value={this.state.selected_country}
               options={this.state.countries}
               onChange={this.updateCountry.bind(this)}
-            />
+            />{/*La X de la opcion país y universidad tiene dos problemas. Por un lado, al intentar navegar con chromebox en la barra de navegacion, la lee como
+            "multiplication". Por otro lado, no hace nada al hacerle click*/}
           </rb.Nav>
           <rb.Nav style={{width:"20%"}}>
             <Select
@@ -149,7 +155,7 @@ export default class App extends Component {
               name="auth_token"
               onChange={this.handleChange.bind(this)}
               placeholder="Authentication Token"
-            />
+            /> {/*No entiendo el authentication token, es como un login? si es asi, por qué no hacerlo como login normal de usuario/contraseña?*/}
           </rb.Nav>
         </rb.Navbar>
         <div className="container">
@@ -160,9 +166,17 @@ export default class App extends Component {
             <Equalizer>
               <rb.Col sm={6} xs={12} className="ldm-div">
                 <LDM setLeadershipQuality={(quality) => {this.setState({selected_quality: quality})}} />
+              {/*Los svg de LDM estan muy cheveres, el estilo está genial. Falta dos cosas: al pasar el mouse por encima
+              sería util que cambiara como lo hace en links o botones para darle a entender al usuario que lo puede precionar,
+              y agregarle que se pueda hacer foco pues navegando con chromebox no pude llegar ahí. Para esto ultimo tambien puede
+              ser util agregarle funcionalidades de botones, es decir, que se presione al dalre espacio o enter al tenerlo en foco.*/}
               </rb.Col>
               <rb.Col sm={6} xs={12} className="flex-vertical-align">
                 <Qualities selected_quality={this.state.selected_quality}/>
+              {/*Sobre los qualities, a mi me visualizaba bien el blanco sobre el amarillo, pero como el profesor dijo eso puede 
+              depender del monitor (o en el caso de la clase el videobeam) o los ojos del usuario. Si encuentra otro color que 
+              vaya bien podría ser bueno cambiarlo, pero en lo personal me parece que se ve bien y no tuve problema. También
+              podría ponerle un aria-live para que al cambiar, alguien que no pueda ver bien se entere que ese cuadro cambió */}
               </rb.Col>
             </Equalizer>
           </rb.Row>
@@ -208,6 +222,9 @@ export default class App extends Component {
                 onChange={this.endDateChanged.bind(this)}
                 dateFormat="YYYY-MM-DD"
               />
+            {/*Tuve problemas con los datepickers al utilizar chromevox, pues el foco se enloquecía y saltaba de fecha inicio a 
+            fecha fin y vice versa interminablemente, obligando al usuario que dependa enteramente de chromevox para navegar deba
+            salirse de la pagina*/}
             </rb.Col>
             <rb.Col xs={12}>
               <table className="table table-responsive">
@@ -241,3 +258,13 @@ export default class App extends Component {
     );
   }
 }
+
+/*
+Puntos que se me hacen importantes:
+- Diseño de la página es muy llamativo, muy bonito. Depronto la barra de navegacion podria tener un color que combine con lo del centro.
+- Falta el uso de mongo con los Meteor.methods
+- Falta accesibilidad.
+- Entiendo que es una página destinada a una organizacion, pero no se si el publico objetivo es cualquier persona o si 
+es solo para uso interno. En cualquier caso creo que sería util poner una página de inicio que explique un poco de qué
+se trata la página (urgente si cualquier persona puede entrar).
+*/
