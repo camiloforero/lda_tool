@@ -6,7 +6,7 @@ import moment from 'moment';
 import LDM from './ldm_graph'
 import Qualities from './leadership_qualities'
 import Equalizer from 'react-equalizer';
-
+// cuando implementes el api que consume los servicios de la ONG como mencionaste en clase, asegurate de dejar eso en un modulo aparte y no dentro del componente que lo neceista.
 var rb = require('react-bootstrap');
 
 //var RadioImg = require('react-radioimg')
@@ -24,14 +24,14 @@ export default class App extends Component {
       end_date:moment(),
       lcs:{
         '1551': [
-          { value: 1395, label: 'Andes'},
+          { value: 1395, label: 'Andes'}, // sería bueno ser consistente con los nombres, o con minúscula o con mayúscila
           { value: 1877, label: 'TUNJA'},
           { value: 1858, label: 'EXTERNADO'},
           { value: 1479, label: 'UPB'},
           { value: 428, label: 'Rosario'},
         ],
         '1589': [
-          { value: 1054, label: 'IPN'},
+          { value: 1054, label: 'IPN'}, // Hay algún motivo técnico  o de negocio de porqué los valores tienen esos números?
           { value: 1865, label: 'Tampico'},
           { value: 2134, label: 'Zacatecas'},
           { value: 2063, label: 'Irapuato'},
@@ -117,6 +117,7 @@ export default class App extends Component {
     });
   };
 
+  // en este render aplicaste estilos inline. Mejor déjalos para un archivo .css. Además, todos eran iguales width:"20%", una razón más para dejarlo en otro archivo.
   render() {
     return (
       <div>

@@ -3,7 +3,7 @@ import Equalizer from 'react-equalizer';
 
 var rb = require('react-bootstrap');
 
-const quality_info = {
+const quality_info = { // esta informacion podría ir en un archivo aparte. Que en los .js o .jsx sólo haya código.
   EO:{
     description:"“I am able to communicate ideas clearly, engage in meaningful conversations with others, and co-create spaces of collaboration that empower people to take action.”",
     color:"#F15B43",

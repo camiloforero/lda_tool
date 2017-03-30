@@ -6,6 +6,9 @@ export default class LDM_svg extends Component {
     console.log(e.target)
     //this.setState(change);
   };
+
+  // el código de aqui para abajo tiene líneas muy largas.
+  // a su vez, deberías tener comentarios explicando el código para ti mismo y los demas. sería difícil volver a esto un mes despues, pues ya olvidaste qué hace cada parte.
   render() {
     return (
       <svg id="Layer_1" data-name="Layer 1" viewBox="0 0 242.87 278.78">
