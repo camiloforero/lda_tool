@@ -13,7 +13,7 @@
   opacity:1
 }
 
-.radio-img > button.type {
+.radio-img > button.typea {
   width:80%;
   margin:auto;
 }
@@ -31,6 +31,7 @@
 
 body {
     font-family: 'Lato', sans-serif !important;
+    background-color: #F3F4F7 !important;
 }
 
 .quality-div {
@@ -69,8 +70,31 @@ body {
   align-items: center; /* align vertical */
 }
 
+.top-margin {
+  margin-top: 10px
+}
+
+.top-padding {
+  padding-top: 10px
+}
+
+.
+
 .ldm-div {
-  padding: 5% 5% 5% 5%;
+  padding: 10% 5% 10% 5%;
+}
+
+.custom-button {
+  background-color: #037Ef3 !important;
+  color: white !important
+}
+
+.custom-button:hover {
+  background-color: #FFC845 !important
+}
+
+html {
+  font-size: 14px
 }
 
 

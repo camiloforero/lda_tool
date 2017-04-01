@@ -4,7 +4,7 @@ import Equalizer from 'react-equalizer';
 var rb = require('react-bootstrap');
 
 const quality_info = {
-  EO:{
+  'Empowering Others':{
     description:"“I am able to communicate ideas clearly, engage in meaningful conversations with others, and co-create spaces of collaboration that empower people to take action.”",
     color:"#F15B43",
     qualities: [
@@ -13,7 +13,7 @@ const quality_info = {
       'Engages with others to achieve a bigger purpose'
     ]
   },
-  SO:{
+  'Solution Oriented':{
     description:"“I come up with solutions to challenges. I am flexible and I am always ready to take the necessary risks .Every time I fall I always stand back up.”",
     color:"#955BA5",
     qualities: [
@@ -22,7 +22,7 @@ const quality_info = {
       'Takes risks when its needed'
     ]
   },
-  WC:{
+  'World Citizen':{
     description:"“I am aware of what is going on in the world and enjoy taking an active role in contributing towards making it a better place for everyone.”",
     color:"#27B999",
     qualities: [
@@ -31,7 +31,7 @@ const quality_info = {
       'Enjoys taking responsibility for improving the world'
     ]
   },
-  SA:{
+  'Self Aware':{
     description:"“I know what I am good at, what’s important to me, and what I am passionate about. I am constantly exploring what I want to achieve in my life.” ",
     color:"#FFC845",
     qualities: [
@@ -44,7 +44,37 @@ const quality_info = {
 
 export default class Qualities extends Component {
 
+
+  render_subqualities() {
+    quality_data = this.props.reduced_stats[this.props.selected_quality];
+    if(quality_data){
+      return Object.keys(quality_data['subscores']).map((key) => {
+        return (
+          <Equalizer>
+            <rb.Col xs={7}>
+              <div className="text-center defining-element-div" style={{backgroundColor:quality_info[this.props.selected_quality]['color']}}>
+                {key}
+              </div>
+            </rb.Col>
+            <rb.Col xs={5}>
+              <div className="text-center defining-element-percentage" style={{backgroundColor:quality_info[this.props.selected_quality]['color']}}>
+                {Math.round(quality_data['subscores'][key]/16*100)}%
+              </div>
+            </rb.Col>
+          </Equalizer>
+        )
+
+      })
+    }
+    else {
+      return <div className="text-center defining-element-div">Acá aparecerán los resultados cuando carguen</div>
+    }
+
+
+  }
+
   render() {
+    console.log(this.props.selected_quality);
     return (
         <rb.Row style={{backgroundColor:quality_info[this.props.selected_quality]['color']}}>
           <rb.Col xs={12}>
@@ -52,42 +82,7 @@ export default class Qualities extends Component {
               {quality_info[this.props.selected_quality]['description']}
             </div>
           </rb.Col>
-          <Equalizer>
-            <rb.Col xs={7}>
-              <div className="text-center defining-element-div" style={{backgroundColor:quality_info[this.props.selected_quality]['color']}}>
-                {quality_info[this.props.selected_quality]['qualities'][0]}
-              </div>
-            </rb.Col>
-            <rb.Col xs={5}>
-              <div className="text-center defining-element-percentage" style={{backgroundColor:quality_info[this.props.selected_quality]['color']}}>
-                50%
-              </div>
-            </rb.Col>
-          </Equalizer>
-          <Equalizer>
-            <rb.Col xs={7}>
-              <div className="text-center defining-element-div" style={{backgroundColor:quality_info[this.props.selected_quality]['color']}}>
-                {quality_info[this.props.selected_quality]['qualities'][1]}
-              </div>
-            </rb.Col>
-            <rb.Col xs={5}>
-              <div className="text-center defining-element-percentage" style={{backgroundColor:quality_info[this.props.selected_quality]['color']}}>
-                50%
-              </div>
-            </rb.Col>
-          </Equalizer>
-          <Equalizer>
-            <rb.Col xs={7}>
-              <div className="text-center defining-element-div" style={{backgroundColor:quality_info[this.props.selected_quality]['color']}}>
-                {quality_info[this.props.selected_quality]['qualities'][2]}
-              </div>
-            </rb.Col>
-            <rb.Col xs={5}>
-              <div className="text-center defining-element-percentage" style={{backgroundColor:quality_info[this.props.selected_quality]['color']}}>
-                50%
-              </div>
-            </rb.Col>
-          </Equalizer>
+          {this.render_subqualities()}
         </rb.Row>
     )
   }
