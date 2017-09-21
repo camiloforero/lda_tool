@@ -52,7 +52,7 @@ Meteor.methods({
       // console.log(response["data"][0]["opportunity"]);
       missing_opps = new Set();
       all_ops = []
-      console.log("reponse:")
+      console.log("response:")
       console.log(response);
       for (i = 0; i<response["data"].length; i++) {
         appl = response["data"][i];

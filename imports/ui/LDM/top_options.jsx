@@ -96,6 +96,7 @@ export default class TopOptions extends Component {
     Meteor.call('ldm_stats.update',
       this.state.selected_lc,
       this.state.selected_type,
+      'approved',
       this.state.start_date.format('YYYY-MM-DD'),
       this.state.end_date.format('YYYY-MM-DD'),
       (err, res) => {
