@@ -5,11 +5,11 @@ import OGV_Managers from '/imports/api/collections';
 export default class BatchJobs {
 
   ep_managers = [
-    { name: 'Nusrat Kabir Prova', id: 1327711 },
-    { name: 'Md Ragib Rakesh', id: 1149831 },
-    { name: 'Syed Abeer Muhammad Kazi', id: 1215826 },
-      { name: 'suranjana mehjabin', id: 1319835 },
-      { name: 'Tanveer Ahmed', id: 1314039 },
+        { name: 'Nusrat Kabir Prova', id: 1327711 },
+        { name: 'Md Ragib Rakesh', id: 1149831 },
+        { name: 'Syed Abeer Muhammad Kazi', id: 1215826 },
+            { name: 'suranjana mehjabin', id: 1319835 },
+            { name: 'Tanveer Ahmed', id: 1314039 },
   ]
 
   ep_managers_v2 = {
@@ -39,6 +39,8 @@ export default class BatchJobs {
     });
     appId = 19156174;
     appToken = 'd4052a58d2354a9b9ca4e6d0b62c9308';
+    ignored_loads_expa = new Set([1782279, 1782346, 1782431, 1783158, 1783378, 1783381, 1783407, 1783545, 1783696, 1783698, 1781890, 1782187, 1782196, 1782277, 1782283, 1782365, 1782413, 1782484, 1782490, 1782493, 1782564, 1782773, 1783618, 1782046, 1782879, 1783521, 1783590, 1783606, 1783607])
+    ignored_loads_podio = new Set([]);
     podio.authenticateWithApp(appId, appToken, (err) => {
       if (err) throw new Error(err);
       podio.isAuthenticated().then(() => {
@@ -51,22 +53,32 @@ export default class BatchJobs {
               //console.log(person.managers)
               console.log(`Número de EP managers: ${person.managers.length}`);
               manager = "None";
-              if (person.managers.length > 0) {
-                manager = person.managers[0];
-                manager = {name: manager.full_name, id: manager.id};
-                return null;
+              if (ignored_loads_expa.has(person.id)) {
+                console.log(`${person.full_name} is already on the list on no_load EPs, ignoring`)
+                return null
               }
               else {
-                console.log(this.ep_managers[this.number].id);
-                console.log("Updating EP manager of " + person.full_name);
-                this.number = (this.number + 1) % this.ep_managers.length;
-                return ExpaCalls.update_person(person.id, {manager_ids: [this.ep_managers[this.number].id]});
+                if(Math.random() > 1) {
+                  console.log('The god of randomness has decided against this person.')
+                  return null
+                }
+                else {
+                  this.number = (this.number + 1) % this.ep_managers.length;
+                  console.log(`Updating EP manager of ${person.full_name} (${this.ep_managers[this.number].name})`);
+                  console.log(person.id)
+                  return ExpaCalls.update_person(person.id, {manager_ids: [this.ep_managers[this.number].id]});
+                }
               }
             }));
           })
           .then( people => {
             return Promise.all(people.map( res => {
               if (res != null) {
+                referral_type = res.referral_type
+                if (referral_type == null || referral_type == "")
+                {
+                  referral_type = "Other"
+                }
                 console.log(`Success assigning EP manager (${res.managers[0].full_name}) to ${res.full_name}. Uploading to PODIO...`);
                 podio_fields = {
                   151791638: {value: res.first_name},
@@ -78,7 +90,7 @@ export default class BatchJobs {
                   151795768: {type: 'mobile', value: `${res.contact_info.country_code}${res.contact_info.phone}`}, // TODO: See how to get this info
                   151795772: {value: res.home_lc.name},
                   151795769: {value: '0 - Uncontacted'},
-                  151818116: {value: res.referral_type }
+                  151818116: {value: referral_type}
                 };
                 console.log(podio_fields);
                 return podio.request('POST', `item/app/${appId}`, {
